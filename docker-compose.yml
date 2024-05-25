@@ -65,6 +65,8 @@ services:
       - ./src:/var/www/html
     entrypoint: ["npm"]
     working_dir: /var/www/html
+    networks:
+      - laravel
 
   artisan:
     build:
@@ -76,3 +78,5 @@ services:
     depends_on:
       - mysql
     entrypoint: ["php", "/var/www/html/artisan"]
+    networks:
+      - laravel
