@@ -48,6 +48,24 @@ services:
     networks:
       - laravel
   
+  nextjs:
+    build: 
+      context: .
+      dockerfile: nextjs.Dockerfile
+    container_name: nextjs
+    tty: true
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./nextjs:/var/www/html
+    environment:
+      - WATCHPACK_POLLING=true
+    # entrypoint: ["npm"]
+    working_dir: /var/www/html
+    networks:
+      - laravel
+
+  
   composer:
     build:
       context: .
