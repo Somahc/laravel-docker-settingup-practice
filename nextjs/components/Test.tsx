@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 // XSRF-TOKENをリクエスト時に送信するための設定
 axios.defaults.withCredentials = true;
@@ -13,6 +14,7 @@ const http = axios.create({
 const Test = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const router = useRouter();
 
     const postData = async () => {
         axios.get('http://localhost/sanctum/csrf-cookie').then((res: any) => {
@@ -20,6 +22,7 @@ const Test = () => {
             // ログイン処理
             http.post('/api/login', {email, password}).then((res: any) => {
                 console.log(res);
+                router.push('/add_todo');
             })
         });
     }

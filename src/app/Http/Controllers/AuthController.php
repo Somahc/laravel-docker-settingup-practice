@@ -31,8 +31,10 @@ class AuthController extends Controller
             $user = User::whereEmail($request->email)->first();
             $user->tokens()->delete();
             $token = $user->createToken("login:user{$user->id}")->plainTextToken;
+
+            $cookie = cookie('token', $token, 60 * 24);
             // ログインが成功したらトークンを返す
-            return response()->json(['token' => $token], Response::HTTP_OK);
+            return response()->json(['token' => $token], Response::HTTP_OK)->withCookie($cookie);
         }
         return response()->json("Can Not Login.", Response::HTTP_INTERNAL_SERVER_ERROR);
     }
